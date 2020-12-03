@@ -34,7 +34,12 @@ export default class App extends Component {
   
 
   updateDog(name, owner, breed) {
-    this.setState###########
+    this.setState({
+      name: name,
+      owner: owner,
+      breed: breed,
+
+    });
   }
   
 componentDidMount() {
