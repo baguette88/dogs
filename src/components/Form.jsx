@@ -3,8 +3,13 @@ import React, { Component } from "react";
 
 export default class Form extends Component {
   constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
+      super(props);
+      this.state = {
+          name: "",
+          owner: "",
+          breed: "",
+      };
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
     handleChange(event) {
@@ -13,33 +18,33 @@ export default class Form extends Component {
         });
     }
     
-
-
     handleSubmit(event) {
         event.preventDefault();
-    fetch("http://localhost:8000/api/v1/dogs/", {
-      method: "POST",
-      body: JSON.stringify({
-        name: this.props.user_id,
-        user_name: this.props.user_name,
-        itemsInOrder: this.props.itemsInCart_id,
-        delivery: this.props.delivery,
-        restaurant_name: this.props.restaurant_name,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((data) => {
-        console.log(data);
-        return data.json();
-      })
-      .then((json) => {
-        console.log(json);
-        this.setState({
-          dogs: json.data,
+        fetch("http://localhost:8000/api/v1/dogs/", {
+            method: "POST",
+            body: JSON.stringify({
+                name: this.state.name,
+                owner: this.state.owner,
+                breed: this.state.breed,
+        
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((data) => {
+                console.log(data);
+                return data.json();
+            })
+            .then((json) => {
+                console.log(json);
+                this.props.getDogs();
         });
-      });
+        this.setState({
+            name: "",
+            owner: "",
+            breed: "",
+      })
   }
   render() {
     return (
@@ -66,4 +71,3 @@ export default class Form extends Component {
       </form>
     );
   }
-}
