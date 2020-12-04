@@ -1,68 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { Component } from "react"
-import Dog from 'components/Dog.jsx'
-import Form from 'components/Form.jsx'
-
-
+import React, { Component } from "react";
+import Dog from "./components/Dog";
+import Form from "./components/Form";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dogs: [],
-      name: "",
-     owner: "",
-      breed: ""
     };
-    this.getDogs =this.getDogs.bind(this)
-    }
-
-  
-  getDogs() {
-    fetch("http://localhost:8000/api/v1/dogs")
-    .then((data) => {
-      console.log(data);
-      return data.json();
-    })
-    .then((json) => {
-      this.setState({
-        dogs: json.data,
-      });
-    });
+    this.getDogs = this.getDogs.bind(this);
+    this.updateDog = this.updateDog.bind(this);
   }
-  
 
-  updateDog(name, owner, breed) {
+  updateDog(newDog) {
     this.setState({
-      name: name,
-      owner: owner,
-      breed: breed,
-
+      dogs: [...this.state.dogs, newDog.data],
     });
   }
-  
-componentDidMount() {
-  this.getDogs();
-}
+
+  getDogs() {
+    fetch("http://localhost:8000/api/v1/dogs/")
+      .then((data) => {
+        console.log(data);
+        return data.json();
+      })
+      .then((json) => {
+        console.log(json);
+        this.setState({
+          dogs: json.data,
+        });
+      });
+  }
+
+  componentDidMount() {
+    this.getDogs();
+  }
 
   render() {
-
-  return (
-    <div>
-      <h3>Hello</h3>
-      <table>
-        <tr>
-         <th>Name </th>
-         <th>Owner</th>
-         <th>Breed</th>
-        </tr>
-      {this.state.dogs.map((dog) => {
-        return <Dog dog={dog} />;
-      })}
+    return (
+      <div>
+        <h3>Hello</h3>
+        <table>
+          <thead>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Breed</th>
+          </thead>
+          {this.state.dogs.map((dog) => {
+            return <Dog dog={dog} />;
+          })}
         </table>
-    </div>
-  );
+        <Form updateDog={this.updateDog} />
+      </div>
+    );
   }
 }
-
