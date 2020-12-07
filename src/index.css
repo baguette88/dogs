@@ -27,3 +27,36 @@ input {
   display: block;
   border: 1px solid grey;
 }
+
+
+ 
+td,
+th {
+    text-align: center;
+    width: 100px;
+    border: 1px solid grey;
+}
+
+th {
+    background-color: yellow;
+}
+
+form {
+    margin-top: 50px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="text"] {
+    position: absolute;
+    left: 70px;
+}
+
+input[type="submit"] {
+    margin-top: 10px;
+    width: 100px;
+    height: 30px;
+}
