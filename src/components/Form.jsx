@@ -37,7 +37,7 @@ export default class Form extends Component {
       })
       .then((json) => {
         console.log(json);
-        this.props.updateDog(json);
+        this.props.addDog(json);
       });
 
     this.setState({
